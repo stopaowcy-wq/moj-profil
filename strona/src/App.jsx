@@ -6,6 +6,27 @@ import videoBg from './assets/background.mp4';
 
 function App() {
   const [muted, setMuted] = useState(true);
+  const [showGallery, setShowGallery] = useState(false);
+  const [answer, setAnswer] = useState("");
+
+  const checkAnswer = () => {
+    // Sprawdzamy odpowiedź po usunięciu spacji i zamianie na małe litery
+    if (answer.toLowerCase().replace(/\s/g, '') === "pandupa") {
+      setShowGallery(true);
+    } else {
+      alert("Źle! Pomyśl jeszcze raz.");
+    }
+  };
+
+  if (showGallery) {
+    return (
+      <div className="main-wrapper gallery-view">
+        <button className="back-btn" onClick={() => setShowGallery(false)}>Powrót</button>
+        <h2>Galeria dla ziomków</h2>
+        <p>Tu w przyszłości dodasz swoje zdjęcia!</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -21,6 +42,17 @@ function App() {
         <div className="profile-card">
           <img src={mojAvatar} alt="Avatar" className="avatar" />
           <h1>Marcin</h1>
+          
+          <div className="gallery-login">
+            <p style={{fontSize: '14px', marginBottom: '5px'}}>Jak inaczej mówimy na Pana Maziarza?</p>
+            <input 
+              type="text" 
+              placeholder="Odpowiedź..." 
+              onChange={(e) => setAnswer(e.target.value)} 
+            />
+            <button onClick={checkAnswer}>Wejdź</button>
+          </div>
+
           <div className="socials">
             <a href="https://open.spotify.com/user/31o3vpjvf54nu3u7cbh4uftwslpa" target="_blank" rel="noreferrer"><FaSpotify /></a>
             <a href="https://www.youtube.com/@stopa4203" target="_blank" rel="noreferrer"><FaYoutube /></a>

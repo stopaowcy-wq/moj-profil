@@ -80,3 +80,34 @@ body {
 .sound-toggle:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+.gallery-login {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.gallery-login input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 200px;
+  text-align: center;
+}
+
+.gallery-login button {
+  padding: 8px 20px;
+  cursor: pointer;
+  background: #ff00ff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.back-btn {
+  margin-bottom: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
