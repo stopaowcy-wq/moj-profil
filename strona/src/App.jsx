@@ -8,28 +8,29 @@ function App() {
   const [muted, setMuted] = useState(true);
 
   return (
-    <div className="main-wrapper">
-      <video autoPlay loop muted={muted} playsInline className="video-bg">
-        <source src={videoBg} type="video/mp4" />
-      </video>
-
-      {/* Przycisk tutaj */}
+    <>
       <button className="sound-toggle" onClick={() => setMuted(!muted)}>
         {muted ? "Włącz dźwięk" : "Wycisz"}
       </button>
 
-      <div className="profile-card">
-        <img src={mojAvatar} alt="Avatar" className="avatar" />
-        <h1>Marcin</h1>
-        <div className="socials">
-          <a href="https://open.spotify.com/user/31o3vpjvf54nu3u7cbh4uftwslpa" target="_blank"><FaSpotify /></a>
-          <a href="https://www.youtube.com/@stopa4203" target="_blank"><FaYoutube /></a>
-          <a href="https://steamcommunity.com/profiles/76561198880818625/" target="_blank"><FaSteam /></a>
-          <a href="https://www.instagram.com/marcin_maziarz433/" target="_blank"><FaInstagram /></a>
-          <a href="https://www.facebook.com/marcin.maziarz.545" target="_blank"><FaFacebook /></a>
+      <div className="main-wrapper">
+        <video autoPlay loop muted={muted} playsInline className="video-bg">
+          <source src={videoBg} type="video/mp4" />
+        </video>
+
+        <div className="profile-card">
+          <img src={mojAvatar} alt="Avatar" className="avatar" />
+          <h1>Marcin</h1>
+          <div className="socials">
+            <a href="https://open.spotify.com/user/31o3vpjvf54nu3u7cbh4uftwslpa" target="_blank" rel="noreferrer"><FaSpotify /></a>
+            <a href="https://www.youtube.com/@stopa4203" target="_blank" rel="noreferrer"><FaYoutube /></a>
+            <a href="https://steamcommunity.com/profiles/76561198880818625/" target="_blank" rel="noreferrer"><FaSteam /></a>
+            <a href="https://www.instagram.com/marcin_maziarz433/" target="_blank" rel="noreferrer"><FaInstagram /></a>
+            <a href="https://www.facebook.com/marcin.maziarz.545" target="_blank" rel="noreferrer"><FaFacebook /></a>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
