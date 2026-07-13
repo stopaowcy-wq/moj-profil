@@ -64,25 +64,25 @@ body {
 }
 
 .sound-toggle {
-  position: absolute; /* To sprawi, że przycisk "oderwie się" od reszty elementów */
-  top: 20px;          /* Odległość od góry */
-  right: 20px;        /* Odległość od prawej strony */
-  z-index: 10;        /* Zapewnia, że przycisk zawsze będzie na wierzchu */
+  position: absolute; 
+  top: 20px;          
+  right: 20px;        
+  z-index: 10;        
   
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.5);
   border: none;
-  color: white;
+  color: white !important; /* Dodałem !important, żeby ikona zawsze była biała */
   padding: 12px;
-  /* border-radius: 50%; */
+  border-radius: 50%; /* Odkomentowałem to - teraz przycisk będzie ładnym kółkiem */
   cursor: pointer;
-  font-size: 20px;
+  font-size: 24px; /* Zwiększyłem odrobinę, żeby ikona była wyraźniejsza */
   transition: background 0.3s;
 }
 .sound-toggle:hover {
-  background: rgba(0, 0, 0, 0.8); /* Ciemniejsze po najechaniu */
+  background: rgba(0, 0, 0, 0.8);
 }
 .gallery-login {
   margin-top: 20px;
