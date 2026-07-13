@@ -1,14 +1,7 @@
-@font-face {
-  font-family: 'PirataOne';
-  src: url('./assets/PirataOne-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 h1 {
-  font-family: 'PirataOne', cursive;
-  font-size: 3rem;
-  letter-spacing: 2px;
+  font-family: 'Pirata One', cursive; /* Dokładnie taka nazwa jak z Google Fonts */
+  font-size: 4rem;
+  color: white;
 }
 body {
   margin: 0;
