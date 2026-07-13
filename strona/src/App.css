@@ -1,6 +1,5 @@
 .main-wrapper {
-  position: relative;
-  width: 100%;
+  position: relative; 
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -65,18 +64,17 @@ body {
 }
 
 .sound-toggle {
-  position: absolute;
+  position: absolute; /* Przycisk wyjęty z układu flex */
   top: 20px;
   right: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.5); /* Ciemniejsze tło */
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 8px 15px;
   border-radius: 20px;
   cursor: pointer;
-  z-index: 10;
-  font-family: 'PirataOne', cursive;
-  text-align: center;
+  z-index: 100; /* Musi być na wierzchu */
+  font-family: sans-serif;
 }
 
 .sound-toggle:hover {
