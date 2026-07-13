@@ -1,3 +1,15 @@
+@font-face {
+  font-family: 'PirataOne';
+  src: url('./assets/PirataOne-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1 {
+  font-family: 'PirataOne', cursive;
+  font-size: 3rem;
+  letter-spacing: 2px;
+}
 body {
   margin: 0;
   height: 100vh;
@@ -6,7 +18,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Courier New', monospace; /* Styl retro/minimalistyczny */
 }
 
 .profile-card {
