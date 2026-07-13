@@ -27,3 +27,20 @@ body {
   border-radius: 50%;
   border: 2px solid #555;
 }
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Odstęp między ikonkami */
+  margin-top: 20px;
+  font-size: 24px; /* Wielkość ikonek */
+}
+
+.socials a {
+  color: white;
+  transition: 0.3s;
+}
+
+.socials a:hover {
+  color: #ff00ff; /* Kolor przy najechaniu myszką */
+  transform: scale(1.2); /* Powiększenie przy najechaniu */
+}
