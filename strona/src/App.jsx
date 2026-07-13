@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="profile-card">
       <img src={mojAvatar} alt="Avatar" className="avatar" />
-      <h1>STOPA</h1>
+      <h1>STOPAa</h1>
 <div className="socials">
   <a href="https://open.spotify.com/user/31o3vpjvf54nu3u7cbh4uftwslpa?si=d92c8c77521c4e9b" target="_blank">Spotify</a>
   <a href="https://www.youtube.com/@stopa4203" target="_blank">   YouTube</a>
