@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { FaSpotify, FaYoutube, FaSteam, FaInstagram, FaFacebook } from 'react-icons/fa';
+import CryptoJS from 'crypto-js'; // Importujemy bibliotekę
 import mojAvatar from './assets/baf4e793-29af-44d1-9e44-1d8c27f6295b.jpg';
 import videoBg from './assets/background.mp4';
 
@@ -9,9 +10,14 @@ function App() {
   const [showGallery, setShowGallery] = useState(false);
   const [answer, setAnswer] = useState("");
 
+  // To jest hash dla słowa "pandupa"
+  const CORRECT_HASH = "b9090b4d455421c60f21464309199d30d525792c30070a78604724810f3c5097";
+
   const checkAnswer = () => {
-    // Sprawdzamy odpowiedź po usunięciu spacji i zamianie na małe litery
-    if (answer.toLowerCase().replace(/\s/g, '') === "pandupa") {
+    // Hashujemy to, co użytkownik wpisał, i porównujemy z naszym hashem
+    const inputHash = CryptoJS.SHA256(answer.toLowerCase().replace(/\s/g, '')).toString();
+    
+    if (inputHash === CORRECT_HASH) {
       setShowGallery(true);
     } else {
       alert("Źle! Pomyśl jeszcze raz.");
