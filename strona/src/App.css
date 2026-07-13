@@ -76,7 +76,7 @@ body {
   border: none;
   color: white;
   padding: 12px;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   cursor: pointer;
   font-size: 20px;
   transition: background 0.3s;
