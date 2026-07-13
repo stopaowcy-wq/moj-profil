@@ -13,6 +13,7 @@ function App() {
         <source src={videoBg} type="video/mp4" />
       </video>
 
+      {/* Przycisk tutaj */}
       <button className="sound-toggle" onClick={() => setMuted(!muted)}>
         {muted ? "Włącz dźwięk" : "Wycisz"}
       </button>
