@@ -3,25 +3,15 @@ import './App.css';
 
 function App() {
   return (
-    <div className="container">
-      <nav>
-        <a href="#home">Start</a>
-        <a href="#galeria">Galeria</a>
-        <a href="#kontakt">Kontakt</a>
-      </nav>
-
-      <section id="home">
-        <h1>Witaj na mojej stronie</h1>
-      </section>
-
-      <section id="galeria">
-        <h2>Moja Galeria</h2>
-        <div className="grid">
-          {/* Tu w przyszłości wstawimy zdjęcia */}
-          <div className="zdjecie">Zdjęcie 1</div>
-          <div className="zdjecie">Zdjęcie 2</div>
-        </div>
-      </section>
+    <div className="profile-card">
+      <img src="https://via.placeholder.com/100" alt="Avatar" className="avatar" />
+      <h1>Navi</h1>
+      <p>If I were you, you would be mine</p>
+      <div className="socials">
+        <a href="https://spotify.com">Spotify</a> | 
+        <a href="https://twitch.tv"> Twitch</a> | 
+        <a href="https://steam.com"> Steam</a>
+      </div>
     </div>
   );
 }
