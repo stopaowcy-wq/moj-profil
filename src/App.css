@@ -1,0 +1,135 @@
+.main-wrapper {
+  position: relative; 
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;   /* Szerokość okna przeglądarki */
+  height: 100vh;  /* Wysokość okna przeglądarki */
+  object-fit: cover; /* To najważniejszy punkt: wypełnia ekran, ucinając nadmiar */
+  z-index: -1;
+}
+
+h1 {
+  font-family: 'Pirata One', cursive; /* Dokładnie taka nazwa jak z Google Fonts */
+  font-size: 4rem;
+  color: white;
+}
+body {
+  margin: 0;
+  height: 100vh;
+  background: black; /* Ciemne tło */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-card {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05); /* Delikatne "szkło" */
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Odstęp między ikonkami */
+  margin-top: 20px;
+  font-size: 24px; /* Wielkość ikonek */
+}
+
+.socials a {
+  color: white;
+  transition: 0.3s;
+}
+
+.socials a:hover {
+  color: #339be0; /* Kolor przy najechaniu myszką */
+  transform: scale(1.2); /* Powiększenie przy najechaniu */
+}
+/* --- POPRAWIONY PRZYCISK DŹWIĘKU --- */
+.sound-toggle {
+  position: absolute !important; /* Wymusza absolutne pozycjonowanie */
+  top: 20px !important;          /* Odległość od góry */
+  right: 20px !important;         /* Odległość od prawej */
+  z-index: 9999 !important;       /* Daje najwyższy priorytet warstwy */
+  
+  display: flex !important;       /* Wymusza wyrównanie wewnętrzne */
+  align-items: center !important;
+  justify-content: center !important;
+  
+  background: rgba(0, 0, 0, 0.5) !important; /* Półprzezroczyste tło */
+  border: none !important;
+  
+  /* Ważne: To ustawia kolor ikony (SVG) na biały */
+  color: white !important;       
+  
+  /* Ważne: To robi z przycisku koło */
+  border-radius: 50% !important; 
+  
+  padding: 15px !important;      /* Wielkość wewnętrzna przycisku */
+  cursor: pointer !important;
+  
+  /* Ważne: To ustawia wielkość samej ikony */
+  font-size: 24px !important;    
+  
+  /* To naprawia potencjalne konflikty w flexboxie */
+  flex-shrink: 0 !important;     
+}
+
+.sound-toggle:hover {
+  background: rgba(0, 0, 0, 0.8) !important; /* Ciemniejsze tło po najechaniu */
+}
+.gallery-login {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.gallery-login input {
+  padding: 8px;
+  border-radius: 5px;
+  /* Zmieniamy tło na półprzezroczyste (ostatnia liczba 0.3 to poziom przezroczystości) */
+  background: rgba(255, 255, 255, 0.2); 
+  /* Usuwamy domyślny biały border i dodajemy delikatną obwódkę */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white; /* Tekst musi być biały, żeby był widoczny na wideo */
+  width: 200px;
+  text-align: center;
+}
+.gallery-login input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.gallery-login button {
+  padding: 8px 20px;
+  cursor: pointer;
+  background: black;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.back-btn {
+  margin-bottom: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
