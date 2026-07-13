@@ -91,15 +91,22 @@ body {
 .gallery-login input {
   padding: 8px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  /* Zmieniamy tło na półprzezroczyste (ostatnia liczba 0.3 to poziom przezroczystości) */
+  background: rgba(255, 255, 255, 0.2); 
+  /* Usuwamy domyślny biały border i dodajemy delikatną obwódkę */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white; /* Tekst musi być biały, żeby był widoczny na wideo */
   width: 200px;
   text-align: center;
+}
+.gallery-login input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .gallery-login button {
   padding: 8px 20px;
   cursor: pointer;
-  background: #ff00ff;
+  background: blac;
   border: none;
   border-radius: 5px;
   color: white;
