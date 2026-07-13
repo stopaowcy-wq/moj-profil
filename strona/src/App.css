@@ -64,19 +64,23 @@ body {
 }
 
 .sound-toggle {
+  position: absolute; /* To sprawi, że przycisk "oderwie się" od reszty elementów */
+  top: 20px;          /* Odległość od góry */
+  right: 20px;        /* Odległość od prawej strony */
+  z-index: 10;        /* Zapewnia, że przycisk zawsze będzie na wierzchu */
+  
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.5); /* Półprzezroczyste tło */
+  background: rgba(0, 0, 0, 0.5);
   border: none;
   color: white;
-  padding: 10px;
-  border-radius: 50%; /* Jeśli chcesz idealne koło */
+  padding: 12px;
+  border-radius: 50%;
   cursor: pointer;
-  font-size: 20px; /* Rozmiar ikony */
+  font-size: 20px;
   transition: background 0.3s;
 }
-
 .sound-toggle:hover {
   background: rgba(0, 0, 0, 0.8); /* Ciemniejsze po najechaniu */
 }
