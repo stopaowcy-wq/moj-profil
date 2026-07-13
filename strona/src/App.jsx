@@ -8,10 +8,14 @@ function App() {
   const [muted, setMuted] = useState(true);
 
   return (
-    <div className="main-wrapper" onClick={() => setMuted(false)}>
+    <div className="main-wrapper">
       <video autoPlay loop muted={muted} playsInline className="video-bg">
         <source src={videoBg} type="video/mp4" />
       </video>
+
+      <button className="sound-toggle" onClick={() => setMuted(!muted)}>
+        {muted ? "Włącz dźwięk" : "Wycisz"}
+      </button>
 
       <div className="profile-card">
         <img src={mojAvatar} alt="Avatar" className="avatar" />
