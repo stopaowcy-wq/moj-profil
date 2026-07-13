@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { FaSpotify, FaYoutube, FaSteam, FaInstagram, FaFacebook } from 'react-icons/fa';
-import CryptoJS from 'crypto-js'; // Importujemy bibliotekę
+import CryptoJS from 'crypto-js'; 
 import mojAvatar from './assets/baf4e793-29af-44d1-9e44-1d8c27f6295b.jpg';
 import videoBg from './assets/background.mp4';
 
@@ -14,8 +14,14 @@ function App() {
   const CORRECT_HASH = "b9090b4d455421c60f21464309199d30d525792c30070a78604724810f3c5097";
 
   const checkAnswer = () => {
-    // Hashujemy to, co użytkownik wpisał, i porównujemy z naszym hashem
-    const inputHash = CryptoJS.SHA256(answer.toLowerCase().replace(/\s/g, '')).toString();
+    // Przygotowanie wartości
+    const preparedAnswer = answer.toLowerCase().replace(/\s/g, '');
+    const inputHash = CryptoJS.SHA256(preparedAnswer).toString();
+    
+    // Dodane logowanie do konsoli dla łatwiejszego debugowania
+    console.log("Wpisana odpowiedź:", preparedAnswer);
+    console.log("Wygenerowany hash:", inputHash);
+    console.log("Czy hash pasuje?", inputHash === CORRECT_HASH);
     
     if (inputHash === CORRECT_HASH) {
       setShowGallery(true);
@@ -54,6 +60,7 @@ function App() {
             <input 
               type="text" 
               placeholder="Odpowiedź..." 
+              value={answer}
               onChange={(e) => setAnswer(e.target.value)} 
             />
             <button onClick={checkAnswer}>Wejdź</button>
