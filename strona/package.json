@@ -9,9 +9,11 @@
     "lint": "oxlint",
     "preview": "vite preview"
   },
-  "dependencies": {
+"dependencies": {
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "react-icons": "^5.0.0",
+    "crypto-js": "^4.2.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",
