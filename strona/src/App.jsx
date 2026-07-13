@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { FaSpotify, FaYoutube, FaSteam, FaInstagram, FaFacebook } from 'react-icons/fa';
 import mojAvatar from './assets/baf4e793-29af-44d1-9e44-1d8c27f6295b.jpg';
 import videoBg from './assets/background.mp4';
 
 function App() {
+  const [muted, setMuted] = useState(true);
+
   return (
-    <div className="main-wrapper">
-      <video autoPlay loop muted playsInline className="video-bg">
+    <div className="main-wrapper" onClick={() => setMuted(false)}>
+      <video autoPlay loop muted={muted} playsInline className="video-bg">
         <source src={videoBg} type="video/mp4" />
       </video>
 
