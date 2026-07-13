@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-
+import mojAvatar from './assets/baf4e793-29af-44d1-9e44-1d8c27f6295b.jpg';
 function App() {
   return (
     <div className="profile-card">
-      <img src="/baf4e793-29af-44d1-9e44-1d8c27f6295b/jpg" alt="Avatar" className="avatar" />
+      <img src={mojAvatar} alt="Avatar" className="avatar" />
       <h1>STOPA</h1>
 <div className="socials">
   <a href="https://open.spotify.com/user/31o3vpjvf54nu3u7cbh4uftwslpa?si=d92c8c77521c4e9b" target="_blank">Spotify</a>
