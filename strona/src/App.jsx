@@ -11,7 +11,7 @@ function App() {
   const [answer, setAnswer] = useState("");
 
   // To jest hash dla słowa "pandupa"
-  const CORRECT_HASH = "b9090b4d455421c60f21464309199d30d525792c30070a78604724810f3c5097";
+  const CORRECT_HASH = "8dabc1bfc3c597297a39e3fe1bc9af39da048b9802bd995f43c46caa8381a715";
 
   const checkAnswer = () => {
     // Przygotowanie wartości
