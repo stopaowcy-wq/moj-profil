@@ -59,7 +59,7 @@ body {
 }
 
 .socials a:hover {
-  color: #ff00ff; /* Kolor przy najechaniu myszką */
+  color: #339be0; /* Kolor przy najechaniu myszką */
   transform: scale(1.2); /* Powiększenie przy najechaniu */
 }
 
@@ -106,7 +106,7 @@ body {
 .gallery-login button {
   padding: 8px 20px;
   cursor: pointer;
-  background: blac;
+  background: black;
   border: none;
   border-radius: 5px;
   color: white;
