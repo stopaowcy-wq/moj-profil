@@ -19,7 +19,7 @@ function App() {
 
       <div className="profile-card">
         <img src={mojAvatar} alt="Avatar" className="avatar" />
-        <h1>STOPA</h1>
+        <h1>Marcin</h1>
         <div className="socials">
           <a href="https://open.spotify.com/user/31o3vpjvf54nu3u7cbh4uftwslpa" target="_blank"><FaSpotify /></a>
           <a href="https://www.youtube.com/@stopa4203" target="_blank"><FaYoutube /></a>
