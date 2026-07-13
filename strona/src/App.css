@@ -64,16 +64,16 @@ body {
 }
 
 .sound-toggle {
-  position: absolute; /* Przycisk wyjęty z układu flex */
+  position: absolute;
   top: 20px;
   right: 20px;
-  background: rgba(0, 0, 0, 0.5); /* Ciemniejsze tło */
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 8px 15px;
   border-radius: 20px;
   cursor: pointer;
-  z-index: 100; /* Musi być na wierzchu */
   font-family: sans-serif;
 }
 
