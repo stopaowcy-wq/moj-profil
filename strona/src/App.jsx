@@ -35,7 +35,7 @@ function App() {
     async function fetchCloudGallery() {
       try {
         // Wysyłamy zapytanie do publicznego API S3 w Backblaze o listę plików
-        const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(`${S3_ENDPOINT}/${BUCKET_NAME}?list-type=2`)}`);
+       const response = await fetch(`${S3_ENDPOINT}/${BUCKET_NAME}?list-type=2`);
         const text = await response.text();
         console.log("Surowe dane z chmury:", text);
         
