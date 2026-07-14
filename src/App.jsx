@@ -46,9 +46,9 @@ function App() {
   <source src={videoBg} type="video/mp4" />
 </video>
 
-      <button className="sound-toggle" onClick={() => setMuted(!muted)}>
+      {/* <button className="sound-toggle" onClick={() => setMuted(!muted)}>
         {muted ? <FaVolumeMute /> : <FaVolumeUp />}
-      </button>
+      </button> */}
 
       <div className="profile-card">
         <img src={mojAvatar} alt="Avatar" className="avatar" />
