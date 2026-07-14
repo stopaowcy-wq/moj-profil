@@ -1,24 +1,55 @@
 import React, { useState } from 'react';
 import './App.css';
-import { FaSpotify, FaYoutube, FaSteam, FaInstagram, FaFacebook, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
+import { FaSpotify, FaYoutube, FaSteam, FaInstagram, FaFacebook, FaVolumeUp, FaVolumeMute, FaDownload, FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import CryptoJS from 'crypto-js'; 
 import mojAvatar from './assets/baf4e793-29af-44d1-9e44-1d8c27f6295b.jpg';
 import videoBg from './assets/background.mp4';
+
+// ==========================================
+// 1. STRUKTURA TWOICH ZDJĘĆ (BAZA DANYCH)
+// ==========================================
+// Tutaj definiujesz swoje foldery oraz zdjęcia, które się w nich znajdują.
+// Ścieżki zaczynające się od "/" odwołują się do folderu "public/" Twojego projektu.
+const GALERIA_DATA = [
+  {
+    id: "wakacje-2025",
+    nazwa: "Wakacje 2025",
+    // Zdjęcie na okładkę folderu:
+    okladka: "/assets/zdjecia_pomniejszone/IMG_2335_wynik.jpg", 
+    zdjecia: [
+      "/assets/zdjecia_pomniejszone/IMG_2335_wynik.jpg",
+      "/assets/zdjecia_pomniejszone/IMG_2336_wynik.jpg",
+      "/assets/zdjecia_pomniejszone/IMG_2337_wynik.jpg",
+      "/assets/zdjecia_pomniejszone/IMG_2338_wynik.jpg",
+    ]
+  },
+  {
+    id: "imprezy",
+    nazwa: "Ekipa i Imprezy",
+    okladka: "/assets/zdjecia_pomniejszone/IMG_2339_wynik.jpg",
+    zdjecia: [
+      "/assets/zdjecia_pomniejszone/IMG_2339_wynik.jpg",
+      "/assets/zdjecia_pomniejszone/IMG_2340_wynik.jpg",
+      "/assets/zdjecia_pomniejszone/IMG_2341_wynik.jpg",
+    ]
+  }
+];
 
 function App() {
   const [muted, setMuted] = useState(true);
   const [showGallery, setShowGallery] = useState(false);
   const [answer, setAnswer] = useState("");
+  
+  // Stany dla nawigacji w galerii
+  const [activeFolder, setActiveFolder] = useState(null); // NULL = widok listy folderów
+  const [lightboxIndex, setLightboxIndex] = useState(null); // NULL = zamknięty podgląd zdjęcia
 
-  // To jest hash dla słowa "pandupa"
   const CORRECT_HASH = "8dabc1bfc3c597297a39e3fe1bc9af39da048b9802bd995f43c46caa8381a715";
 
   const checkAnswer = () => {
-    // Przygotowanie wartości
     const preparedAnswer = answer.toLowerCase().replace(/\s/g, '');
     const inputHash = CryptoJS.SHA256(preparedAnswer).toString();
     
-    // Dodane logowanie do konsoli dla łatwiejszego debugowania
     console.log("Wpisana odpowiedź:", preparedAnswer);
     console.log("Wygenerowany hash:", inputHash);
     console.log("Czy hash pasuje?", inputHash === CORRECT_HASH);
@@ -30,16 +61,106 @@ function App() {
     }
   };
 
+  // Funkcja ułatwiająca pobieranie plików
+  const downloadImage = (url) => {
+    const link = document.createElement('a');
+    link.href = url;
+    // Wyciąga oryginalną nazwę pliku z adresu URL
+    link.download = url.split('/').pop();
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Obsługa przełączania zdjęć w Lightboxie
+  const nextImage = (e) => {
+    e.stopPropagation();
+    if (activeFolder && lightboxIndex !== null) {
+      setLightboxIndex((prev) => (prev + 1) % activeFolder.zdjecia.length);
+    }
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    if (activeFolder && lightboxIndex !== null) {
+      setLightboxIndex((prev) => (prev - 1 + activeFolder.zdjecia.length) % activeFolder.zdjecia.length);
+    }
+  };
+
+  // ==========================================
+  // WIDOK GALERII (PO ZALOGOWANIU)
+  // ==========================================
   if (showGallery) {
     return (
       <div className="main-wrapper gallery-view">
-        <button className="back-btn" onClick={() => setShowGallery(false)}>Powrót</button>
-        <h2>Galeria dla ziomków</h2>
-        <p>Tu w przyszloci gowno</p>
+        {/* Pasek nawigacji u góry */}
+        <div className="gallery-header">
+          {activeFolder ? (
+            <button className="back-btn" onClick={() => { setActiveFolder(null); setLightboxIndex(null); }}>
+              <FaArrowLeft /> Powrót do folderów
+            </button>
+          ) : (
+            <button className="back-btn" onClick={() => setShowGallery(false)}>Wyjdź z Galerii</button>
+          )}
+          <h2>{activeFolder ? activeFolder.nazwa : "Galeria dla ziomków"}</h2>
+        </div>
+
+        <div className="gallery-content">
+          {/* Sytuacja A: Widok listy folderów */}
+          {!activeFolder && (
+            <div className="folders-grid">
+              {GALERIA_DATA.map((folder) => (
+                <div key={folder.id} className="folder-card" onClick={() => setActiveFolder(folder)}>
+                  <div className="folder-thumbnail">
+                    <img src={folder.okladka} alt={folder.nazwa} loading="lazy" />
+                    <span className="photos-count">{folder.zdjecia.length} zdjęć</span>
+                  </div>
+                  <h3>{folder.nazwa}</h3>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Sytuacja B: Widok wnętrza konkretnego folderu */}
+          {activeFolder && (
+            <div className="photos-grid">
+              {activeFolder.zdjecia.map((fotoUrl, index) => (
+                <div key={index} className="photo-card" onClick={() => setLightboxIndex(index)}>
+                  <img src={fotoUrl} alt={`Fotka ${index}`} loading="lazy" />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* ==========================================
+            LIGHTBOX - POWIĘKSZENIE I POBIERANIE ZDJĘCIA
+            ========================================== */}
+        {activeFolder && lightboxIndex !== null && (
+          <div className="lightbox-overlay" onClick={() => setLightboxIndex(null)}>
+            <button className="lightbox-close" onClick={() => setLightboxIndex(null)}><FaTimes /></button>
+            
+            <button className="lightbox-nav prev" onClick={prevImage}><FaArrowLeft /></button>
+            
+            <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+              <img src={activeFolder.zdjecia[lightboxIndex]} alt="Powiększenie" />
+              
+              <div className="lightbox-toolbar">
+                <span>Zdjęcie {lightboxIndex + 1} z {activeFolder.zdjecia.length}</span>
+                <button className="download-btn" onClick={() => downloadImage(activeFolder.zdjecia[lightboxIndex])}>
+                  <FaDownload /> Pobierz oryginalne
+                </button>
+              </div>
+            </div>
+            
+            <button className="lightbox-nav next" onClick={nextImage}><FaArrowRight /></button>
+          </div>
+        )}
       </div>
     );
   }
 
+  // Oryginalny ekran powitalny
   return (
     <>
       <button className="sound-toggle" onClick={() => setMuted(!muted)} title={muted ? "Włącz dźwięk" : "Wycisz"}>
@@ -62,6 +183,7 @@ function App() {
               placeholder="Odpowiedź..." 
               value={answer}
               onChange={(e) => setAnswer(e.target.value)} 
+              onKeyDown={(e) => e.key === 'Enter' && checkAnswer()} // Dodane logowanie enterem
             />
             <button onClick={checkAnswer}>Wejdź</button>
           </div>
