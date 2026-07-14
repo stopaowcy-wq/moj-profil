@@ -64,36 +64,28 @@ body {
 }
 /* --- POPRAWIONY PRZYCISK DŹWIĘKU --- */
 .sound-toggle {
-  position: absolute !important; /* Wymusza absolutne pozycjonowanie */
-  top: 20px !important;          /* Odległość od góry */
-  right: 20px !important;         /* Odległość od prawej */
-  z-index: 9999 !important;       /* Daje najwyższy priorytet warstwy */
+  position: absolute !important;
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 9999 !important;
   
-  display: flex !important;       /* Wymusza wyrównanie wewnętrzne */
+  background: rgba(255, 255, 255, 0.1) !important; /* Szklany efekt */
+  backdrop-filter: blur(10px) !important;           /* Rozmycie tła */
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border-radius: 50% !important;
+  width: 50px !important;
+  height: 50px !important;
+  display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  
-  background: rgba(0, 0, 0, 0.5) !important; /* Półprzezroczyste tło */
-  border: none !important;
-  
-  /* Ważne: To ustawia kolor ikony (SVG) na biały */
-  color: white !important;       
-  
-  /* Ważne: To robi z przycisku koło */
-  border-radius: 50% !important; 
-  
-  padding: 15px !important;      /* Wielkość wewnętrzna przycisku */
   cursor: pointer !important;
-  
-  /* Ważne: To ustawia wielkość samej ikony */
-  font-size: 24px !important;    
-  
-  /* To naprawia potencjalne konflikty w flexboxie */
-  flex-shrink: 0 !important;     
+  transition: all 0.3s ease !important;
 }
 
 .sound-toggle:hover {
-  background: rgba(0, 0, 0, 0.8) !important; /* Ciemniejsze tło po najechaniu */
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(1.1) !important;
 }
 .gallery-login {
   margin-top: 20px;

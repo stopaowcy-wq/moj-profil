@@ -38,10 +38,10 @@ function App() {
 <video 
   autoPlay 
   loop 
-  muted={muted} 
+  muted={true} // Wymuszamy wyciszenie, co pozwala na autoodtwarzanie
   playsInline 
-  controls={false} // Wymusza brak kontrolek
   className="video-bg"
+  style={{ pointerEvents: 'none' }} // Blokuje interakcje z wideo (np. klikanie w przyciski na filmie)
 >
   <source src={videoBg} type="video/mp4" />
 </video>
