@@ -6,31 +6,61 @@ import mojAvatar from './assets/baf4e793-29af-44d1-9e44-1d8c27f6295b.jpg';
 import videoBg from './assets/background.mp4';
 
 // ==========================================
-// 1. STRUKTURA TWOICH ZDJĘĆ (BAZA DANYCH)
+// 1. STRUKTURA TWOICH ZDJĘĆ Z BACKBLAZE B2
 // ==========================================
-// Tutaj definiujesz swoje foldery oraz zdjęcia, które się w nich znajdują.
-// Ścieżki zaczynające się od "/" odwołują się do folderu "public/" Twojego projektu.
+// Poniżej znajduje się główny adres URL do Twojego kubełka w chmurze
+const BUCKET_URL = "https://f005.backblazeb2.com/file/galeria-marcina";
+
 const GALERIA_DATA = [
   {
-    id: "wakacje-2025",
-    nazwa: "Wakacje 2025",
-    // Zdjęcie na okładkę folderu:
-    okladka: "/assets/zdjecia_pomniejszone/IMG_2335_wynik.jpg", 
+    id: "sojklub",
+    nazwa: "Sojklub",
+    // Link do zdjęcia na okładkę (wpisz nazwę jednego z plików w tym folderze, np. zdjecie1.jpg)
+    okladka: `${BUCKET_URL}/sojklub/NAZWA_OKLADKI.jpg`, 
     zdjecia: [
-      "/assets/zdjecia_pomniejszone/IMG_2335_wynik.jpg",
-      "/assets/zdjecia_pomniejszone/IMG_2336_wynik.jpg",
-      "/assets/zdjecia_pomniejszone/IMG_2337_wynik.jpg",
-      "/assets/zdjecia_pomniejszone/IMG_2338_wynik.jpg",
+      `${BUCKET_URL}/sojklub/ZDJECIE_1.jpg`,
+      `${BUCKET_URL}/sojklub/ZDJECIE_2.jpg`,
+      // Dopisz tutaj resztę nazw plików z tego folderu
     ]
   },
   {
-    id: "imprezy",
-    nazwa: "Ekipa i Imprezy",
-    okladka: "/assets/zdjecia_pomniejszone/IMG_2339_wynik.jpg",
+    id: "sokolniki",
+    nazwa: "Sokolniki",
+    okladka: `${BUCKET_URL}/Sokolniki/NAZWA_OKLADKI.jpg`,
     zdjecia: [
-      "/assets/zdjecia_pomniejszone/IMG_2339_wynik.jpg",
-      "/assets/zdjecia_pomniejszone/IMG_2340_wynik.jpg",
-      "/assets/zdjecia_pomniejszone/IMG_2341_wynik.jpg",
+      `${BUCKET_URL}/Sokolniki/ZDJECIE_1.jpg`,
+      `${BUCKET_URL}/Sokolniki/ZDJECIE_2.jpg`,
+      // Dopisz tutaj resztę nazw plików z tego folderu
+    ]
+  },
+  {
+    id: "solina",
+    nazwa: "Solina",
+    okladka: `${BUCKET_URL}/Solina/NAZWA_OKLADKI.jpg`,
+    zdjecia: [
+      `${BUCKET_URL}/Solina/ZDJECIE_1.jpg`,
+      `${BUCKET_URL}/Solina/ZDJECIE_2.jpg`,
+      // Dopisz tutaj resztę nazw plików z tego folderu
+    ]
+  },
+  {
+    id: "urodziny-joli",
+    nazwa: "Urodziny Joli",
+    okladka: `${BUCKET_URL}/urodziny%20joli/NAZWA_OKLADKI.jpg`, // Spacja zamieniona na %20, ponieważ linki URL nie mogą mieć spacji
+    zdjecia: [
+      `${BUCKET_URL}/urodziny%20joli/ZDJECIE_1.jpg`,
+      `${BUCKET_URL}/urodziny%20joli/ZDJECIE_2.jpg`,
+      // Dopisz tutaj resztę nazw plików z tego folderu
+    ]
+  },
+  {
+    id: "waldom-kompres",
+    nazwa: "Waldom Kompres",
+    okladka: `${BUCKET_URL}/Waldom%20Kompres/NAZWA_OKLADKI.jpg`, // Spacja zamieniona na %20
+    zdjecia: [
+      `${BUCKET_URL}/Waldom%20Kompres/ZDJECIE_1.jpg`,
+      `${BUCKET_URL}/Waldom%20Kompres/ZDJECIE_2.jpg`,
+      // Dopisz tutaj resztę nazw plików z tego folderu
     ]
   }
 ];
@@ -183,7 +213,7 @@ function App() {
               placeholder="Odpowiedź..." 
               value={answer}
               onChange={(e) => setAnswer(e.target.value)} 
-              onKeyDown={(e) => e.key === 'Enter' && checkAnswer()} // Dodane logowanie enterem
+              onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
             />
             <button onClick={checkAnswer}>Wejdź</button>
           </div>

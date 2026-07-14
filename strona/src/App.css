@@ -40,7 +40,6 @@ h1 {
 .profile-card {
   text-align: center;
   background: rgba(0, 0, 0, 0.4); /* Zmienione na delikatne, ciemne szkło dla lepszego kontrastu */
-  backdrop-filter: blur(10px); /* Efekt rozmycia za kartą (efekt iOS/Windows) */
   padding: 40px;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
