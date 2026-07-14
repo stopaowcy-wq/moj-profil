@@ -1,11 +1,25 @@
+/* --- ORYGINALNE STYLE BAZOWE --- */
+body {
+  margin: 0;
+  height: 100vh;
+  background: black; /* Ciemne tło */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif; /* Dodany domyślny font, by dobrze współgrał z resztą */
+}
+
 .main-wrapper {
   position: relative; 
   height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
+
 .video-bg {
   position: fixed;
   top: 0;
@@ -20,22 +34,19 @@ h1 {
   font-family: 'Pirata One', cursive; /* Dokładnie taka nazwa jak z Google Fonts */
   font-size: 4rem;
   color: white;
-}
-body {
-  margin: 0;
-  height: 100vh;
-  background: black; /* Ciemne tło */
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 10px 0;
 }
 
 .profile-card {
   text-align: center;
-  background: rgba(255, 255, 255, 0.05); /* Delikatne "szkło" */
+  background: rgba(0, 0, 0, 0.4); /* Zmienione na delikatne, ciemne szkło dla lepszego kontrastu */
+  backdrop-filter: blur(10px); /* Efekt rozmycia za kartą (efekt iOS/Windows) */
   padding: 40px;
   border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  max-width: 380px;
+  width: 90%;
 }
 
 .avatar {
@@ -45,6 +56,7 @@ body {
   object-fit: cover;
   border: 3px solid rgba(255, 255, 255, 0.2);
 }
+
 .socials {
   display: flex;
   justify-content: center;
@@ -62,39 +74,40 @@ body {
   color: #339be0; /* Kolor przy najechaniu myszką */
   transform: scale(1.2); /* Powiększenie przy najechaniu */
 }
-/* --- POPRAWIONY PRZYCISK DŹWIĘKU --- */
+
+/* --- PRZYCISK DŹWIĘKU --- */
 .sound-toggle {
-  position: absolute !important; /* Wymusza absolutne pozycjonowanie */
-  top: 20px !important;          /* Odległość od góry */
-  right: 20px !important;         /* Odległość od prawej */
-  z-index: 9999 !important;       /* Daje najwyższy priorytet warstwy */
+  position: fixed !important; /* Fixed gwarantuje stałą pozycję względem ekranu */
+  top: 20px !important;          
+  right: 20px !important;         
+  z-index: 9999 !important;       
   
-  display: flex !important;       /* Wymusza wyrównanie wewnętrzne */
+  display: flex !important;       
   align-items: center !important;
   justify-content: center !important;
   
   background: rgba(0, 0, 0, 0.5) !important; /* Półprzezroczyste tło */
-  border: none !important;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   
-  /* Ważne: To ustawia kolor ikony (SVG) na biały */
   color: white !important;       
-  
-  /* Ważne: To robi z przycisku koło */
   border-radius: 50% !important; 
   
-  padding: 15px !important;      /* Wielkość wewnętrzna przycisku */
+  width: 50px !important;       /* Stałe wymiary dają idealne koło */
+  height: 50px !important;
   cursor: pointer !important;
   
-  /* Ważne: To ustawia wielkość samej ikony */
-  font-size: 24px !important;    
-  
-  /* To naprawia potencjalne konflikty w flexboxie */
-  flex-shrink: 0 !important;     
+  font-size: 20px !important;    /* Rozmiar ikony głośnika */
+  transition: all 0.3s ease !important;
 }
 
 .sound-toggle:hover {
-  background: rgba(0, 0, 0, 0.8) !important; /* Ciemniejsze tło po najechaniu */
+  background: rgba(255, 255, 255, 0.2) !important; /* Jaśniejsze tło i zmiana koloru przy hoverze */
+  color: #339be0 !important;
+  transform: scale(1.1);
 }
+
+/* --- LOGOWANIE DO GALERII --- */
 .gallery-login {
   margin-top: 20px;
   display: flex;
@@ -106,14 +119,20 @@ body {
 .gallery-login input {
   padding: 8px;
   border-radius: 5px;
-  /* Zmieniamy tło na półprzezroczyste (ostatnia liczba 0.3 to poziom przezroczystości) */
   background: rgba(255, 255, 255, 0.2); 
-  /* Usuwamy domyślny biały border i dodajemy delikatną obwódkę */
   border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white; /* Tekst musi być biały, żeby był widoczny na wideo */
+  color: white; 
   width: 200px;
   text-align: center;
+  outline: none;
+  transition: 0.3s;
 }
+
+.gallery-login input:focus {
+  border-color: #339be0;
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .gallery-login input::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
@@ -121,15 +140,345 @@ body {
 .gallery-login button {
   padding: 8px 20px;
   cursor: pointer;
-  background: black;
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 5px;
   color: white;
   font-weight: bold;
+  transition: 0.3s;
 }
 
+.gallery-login button:hover {
+  background: #339be0;
+  border-color: #339be0;
+}
+
+
+/* =======================================================
+   NOWE STYLE: WIDOK GALERII (PO POPRAWNEJ ODPOWIEDZI)
+   ======================================================= */
+
+.gallery-view {
+  background: rgba(10, 10, 10, 0.95); /* Bardzo ciemne, kinowe tło */
+  min-height: 100vh;
+  width: 100vw;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.gallery-header {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 20px;
+}
+
+.gallery-header h2 {
+  font-size: 2rem;
+  font-family: 'Pirata One', cursive; /* Zachowujemy Twój piracki styl nagłówków w galerii */
+  letter-spacing: 1.5px;
+  color: white;
+  margin: 0;
+}
+
+/* Przycisk powrotu w galerii */
 .back-btn {
-  margin-bottom: 20px;
-  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #339be0;
+  border-color: #339be0;
+  transform: translateX(-3px); /* Delikatne przesunięcie w lewo przy powrocie */
+}
+
+/* --- WIDOK LISTOWANIA FOLDERÓW (KAFELKI) --- */
+.gallery-content {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.folders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  width: 100%;
+}
+
+.folder-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(5px);
+}
+
+.folder-card:hover {
+  transform: translateY(-8px);
+  border-color: #339be0;
+  box-shadow: 0 12px 30px rgba(51, 155, 224, 0.2);
+}
+
+.folder-thumbnail {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  background: #111;
+}
+
+.folder-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.folder-card:hover .folder-thumbnail img {
+  transform: scale(1.08);
+}
+
+/* Etykieta ilości zdjęć */
+.photos-count {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.folder-card h3 {
+  margin: 18px;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+
+/* --- SIATKA ZDJĘĆ WNĘTRZA FOLDERU --- */
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+  width: 100%;
+}
+
+.photo-card {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s ease;
+}
+
+.photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.photo-card:hover {
+  border-color: #339be0;
+}
+
+.photo-card:hover img {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+
+
+/* =======================================================
+   LIGHTBOX (OKNO PODGLĄDU PEŁNOEKRANOWEGO I POBIERANIA)
+   ======================================================= */
+
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.96); /* Bardzo mocne zaciemnienie kinowe */
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+/* Przycisk zamknięcia (krzyżyk) */
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10002;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg); /* Przyjemny obrót przy hoverze */
+}
+
+/* Strzałki nawigacji lewo/prawo */
+.lightbox-nav {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1.2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  z-index: 10001;
+}
+
+.lightbox-nav:hover {
+  background: #339be0;
+  border-color: #339be0;
+  transform: scale(1.1);
+}
+
+.lightbox-nav.prev {
+  left: 40px;
+}
+
+.lightbox-nav.next {
+  right: 40px;
+}
+
+/* Kontener na zdjęcie główne */
+.lightbox-content {
+  position: relative;
+  max-width: 80%;
+  max-height: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dolny pasek narzędziowy Lightboxa */
+.lightbox-toolbar {
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+
+/* Przycisk pobierania */
+.download-btn {
+  background: #339be0; /* Dopasowany do koloru akcentu z Twojej karty profilowej */
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(51, 155, 224, 0.3);
+}
+
+.download-btn:hover {
+  background: #2581be;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(51, 155, 224, 0.4);
+}
+
+
+/* --- DOSTOSOWANIE DLA TELEFONÓW (RESPONSYWNOŚĆ) --- */
+@media (max-width: 768px) {
+  /* Na telefonie ukrywamy wielkie boczne strzałki, żeby nie zasłaniały zdjęcia */
+  .lightbox-nav {
+    display: none !important; 
+  }
+  
+  .lightbox-content {
+    max-width: 95%;
+  }
+
+  .lightbox-content img {
+    max-height: 60vh;
+  }
+  
+  .lightbox-toolbar {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .gallery-header {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .gallery-header h2 {
+    font-size: 1.6rem;
+  }
+  
+  .folders-grid {
+    grid-template-columns: 1fr; /* Jeden duży kafel na wiersz na komórkach */
+    gap: 20px;
+  }
 }
