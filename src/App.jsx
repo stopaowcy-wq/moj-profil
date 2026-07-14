@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
-import { FaSpotify, FaYoutube, FaSteam, FaInstagram, FaFacebook, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
+import { FaSpotify, FaYoutube, FaSteam, FaInstagram, FaFacebook } from 'react-icons/fa';
 import CryptoJS from 'crypto-js'; 
 import mojAvatar from './assets/baf4e793-29af-44d1-9e44-1d8c27f6295b.jpg';
 import videoBg from './assets/background.mp4';
 
 function App() {
-  const [muted, setMuted] = useState(true);
   const [showGallery, setShowGallery] = useState(false);
   const [answer, setAnswer] = useState("");
 
@@ -35,20 +34,9 @@ function App() {
 
   return (
     <div className="main-wrapper">
-<video 
-  autoPlay 
-  loop 
-  muted={true} // Wymuszamy wyciszenie, co pozwala na autoodtwarzanie
-  playsInline 
-  className="video-bg"
-  style={{ pointerEvents: 'none' }} // Blokuje interakcje z wideo (np. klikanie w przyciski na filmie)
->
-  <source src={videoBg} type="video/mp4" />
-</video>
-
-      {/* <button className="sound-toggle" onClick={() => setMuted(!muted)}>
-        {muted ? <FaVolumeMute /> : <FaVolumeUp />}
-      </button> */}
+      <video autoPlay loop muted playsInline className="video-bg">
+        <source src={videoBg} type="video/mp4" />
+      </video>
 
       <div className="profile-card">
         <img src={mojAvatar} alt="Avatar" className="avatar" />
