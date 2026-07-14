@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { FaSpotify, FaYoutube, FaSteam, FaInstagram, FaFacebook, FaVolumeUp, FaVolumeMute, FaDownload, FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
 import CryptoJS from 'crypto-js'; 
@@ -6,75 +6,88 @@ import mojAvatar from './assets/baf4e793-29af-44d1-9e44-1d8c27f6295b.jpg';
 import videoBg from './assets/background.mp4';
 
 // ==========================================
-// 1. STRUKTURA TWOICH ZDJĘĆ Z BACKBLAZE B2
+// 1. KONFIGURACJA CHMURY BACKBLAZE B2
 // ==========================================
-// Poniżej znajduje się główny adres URL do Twojego kubełka w chmurze
+const BUCKET_NAME = "galeria-marcina";
 const BUCKET_URL = "https://f005.backblazeb2.com/file/galeria-marcina";
-
-const GALERIA_DATA = [
-  {
-    id: "sojklub",
-    nazwa: "Sojklub",
-    // Link do zdjęcia na okładkę (wpisz nazwę jednego z plików w tym folderze, np. zdjecie1.jpg)
-    okladka: `${BUCKET_URL}/sojklub/NAZWA_OKLADKI.jpg`, 
-    zdjecia: [
-      `${BUCKET_URL}/sojklub/ZDJECIE_1.jpg`,
-      `${BUCKET_URL}/sojklub/ZDJECIE_2.jpg`,
-      // Dopisz tutaj resztę nazw plików z tego folderu
-    ]
-  },
-  {
-    id: "sokolniki",
-    nazwa: "Sokolniki",
-    okladka: `${BUCKET_URL}/Sokolniki/NAZWA_OKLADKI.jpg`,
-    zdjecia: [
-      `${BUCKET_URL}/Sokolniki/ZDJECIE_1.jpg`,
-      `${BUCKET_URL}/Sokolniki/ZDJECIE_2.jpg`,
-      // Dopisz tutaj resztę nazw plików z tego folderu
-    ]
-  },
-  {
-    id: "solina",
-    nazwa: "Solina",
-    okladka: `${BUCKET_URL}/Solina/NAZWA_OKLADKI.jpg`,
-    zdjecia: [
-      `${BUCKET_URL}/Solina/ZDJECIE_1.jpg`,
-      `${BUCKET_URL}/Solina/ZDJECIE_2.jpg`,
-      // Dopisz tutaj resztę nazw plików z tego folderu
-    ]
-  },
-  {
-    id: "urodziny-joli",
-    nazwa: "Urodziny Joli",
-    okladka: `${BUCKET_URL}/urodziny%20joli/NAZWA_OKLADKI.jpg`, // Spacja zamieniona na %20, ponieważ linki URL nie mogą mieć spacji
-    zdjecia: [
-      `${BUCKET_URL}/urodziny%20joli/ZDJECIE_1.jpg`,
-      `${BUCKET_URL}/urodziny%20joli/ZDJECIE_2.jpg`,
-      // Dopisz tutaj resztę nazw plików z tego folderu
-    ]
-  },
-  {
-    id: "waldom-kompres",
-    nazwa: "Waldom Kompres",
-    okladka: `${BUCKET_URL}/Waldom%20Kompres/NAZWA_OKLADKI.jpg`, // Spacja zamieniona na %20
-    zdjecia: [
-      `${BUCKET_URL}/Waldom%20Kompres/ZDJECIE_1.jpg`,
-      `${BUCKET_URL}/Waldom%20Kompres/ZDJECIE_2.jpg`,
-      // Dopisz tutaj resztę nazw plików z tego folderu
-    ]
-  }
-];
+// Adres endpointu S3 potrzebny do automatycznego pobrania listy plików:
+const S3_ENDPOINT = "https://s3.us-east-005.backblazeb2.com";
 
 function App() {
   const [muted, setMuted] = useState(true);
   const [showGallery, setShowGallery] = useState(false);
   const [answer, setAnswer] = useState("");
   
+  // Stany dla automatycznego ładowania chmury
+  const [galleryData, setGalleryData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
   // Stany dla nawigacji w galerii
   const [activeFolder, setActiveFolder] = useState(null); // NULL = widok listy folderów
   const [lightboxIndex, setLightboxIndex] = useState(null); // NULL = zamknięty podgląd zdjęcia
 
   const CORRECT_HASH = "8dabc1bfc3c597297a39e3fe1bc9af39da048b9802bd995f43c46caa8381a715";
+
+  // ==========================================
+  // 2. AUTOMATYCZNE POBIERANIE LISTY PLIKÓW
+  // ==========================================
+  useEffect(() => {
+    async function fetchCloudGallery() {
+      try {
+        // Wysyłamy zapytanie do publicznego API S3 w Backblaze o listę plików
+        const response = await fetch(`${S3_ENDPOINT}/${BUCKET_NAME}?list-type=2`);
+        const text = await response.text();
+        
+        // Parsujemy XML zwrócony przez serwer
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(text, "text/xml");
+        const keys = Array.from(xmlDoc.getElementsByTagName("Key")).map(el => el.textContent);
+
+        const folderMap = {};
+
+        keys.forEach(key => {
+          // Omijamy puste foldery techniczne, pliki ukryte oraz pliki konfiguracyjne chmury
+          if (key.endsWith('/') || key.startsWith('.') || key.includes('.bzEmpty')) return;
+
+          // Dzielimy ścieżkę na folder i plik (np. "sojklub/zdjecie.jpg")
+          const parts = key.split('/');
+          if (parts.length > 1) {
+            const rawFolderName = parts[0];
+            // Tworzymy poprawny, bezpieczny adres URL do zdjęcia
+            const encodedKey = key.split('/').map(segment => encodeURIComponent(segment)).join('/');
+            const fullUrl = `${BUCKET_URL}/${encodedKey}`;
+
+            if (!folderMap[rawFolderName]) {
+              // Formatujemy nazwę wyświetlaną folderu (np. "urodziny joli" -> "Urodziny Joli")
+              const cleanName = rawFolderName
+                .replace(/[-_]/g, ' ')
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+
+              folderMap[rawFolderName] = {
+                id: rawFolderName,
+                nazwa: cleanName,
+                okladka: fullUrl, // Pierwsze napotkane zdjęcie ustawia się automatycznie na okładkę
+                zdjecia: []
+              };
+            }
+            folderMap[rawFolderName].zdjecia.push(fullUrl);
+          }
+        });
+
+        // Zamieniamy obiekt na tablicę, którą zrozumie React
+        const parsedGallery = Object.values(folderMap);
+        setGalleryData(parsedGallery);
+        setLoading(false);
+      } catch (error) {
+        console.error("Wystąpił problem z pobieraniem zdjęć z Backblaze:", error);
+        setLoading(false);
+      }
+    }
+
+    fetchCloudGallery();
+  }, []);
 
   const checkAnswer = () => {
     const preparedAnswer = answer.toLowerCase().replace(/\s/g, '');
@@ -91,12 +104,12 @@ function App() {
     }
   };
 
-  // Funkcja ułatwiająca pobieranie plików
+  // Funkcja pobierania plików
   const downloadImage = (url) => {
     const link = document.createElement('a');
     link.href = url;
-    // Wyciąga oryginalną nazwę pliku z adresu URL
-    link.download = url.split('/').pop();
+    // Wyciąga oryginalną nazwę pliku z adresu URL i dekoduje ją (usuwa znaki typu %20)
+    link.download = decodeURIComponent(url.split('/').pop());
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -118,7 +131,7 @@ function App() {
   };
 
   // ==========================================
-  // WIDOK GALERII (PO ZALOGOWANIU)
+  // 3. WIDOK GALERII (PO ZALOGOWANIU)
   // ==========================================
   if (showGallery) {
     return (
@@ -136,30 +149,39 @@ function App() {
         </div>
 
         <div className="gallery-content">
-          {/* Sytuacja A: Widok listy folderów */}
-          {!activeFolder && (
-            <div className="folders-grid">
-              {GALERIA_DATA.map((folder) => (
-                <div key={folder.id} className="folder-card" onClick={() => setActiveFolder(folder)}>
-                  <div className="folder-thumbnail">
-                    <img src={folder.okladka} alt={folder.nazwa} loading="lazy" />
-                    <span className="photos-count">{folder.zdjecia.length} zdjęć</span>
-                  </div>
-                  <h3>{folder.nazwa}</h3>
+          {loading ? (
+            <div style={{ color: 'white', textAlign: 'center', marginTop: '50px' }}>Ładowanie zdjęć z chmury...</div>
+          ) : (
+            <>
+              {/* Sytuacja A: Widok listy folderów */}
+              {!activeFolder && (
+                <div className="folders-grid">
+                  {galleryData.map((folder) => (
+                    <div key={folder.id} className="folder-card" onClick={() => setActiveFolder(folder)}>
+                      <div className="folder-thumbnail">
+                        <img src={folder.okladka} alt={folder.nazwa} loading="lazy" />
+                        <span className="photos-count">{folder.zdjecia.length} zdjęć</span>
+                      </div>
+                      <h3>{folder.nazwa}</h3>
+                    </div>
+                  ))}
+                  {galleryData.length === 0 && (
+                    <div style={{ color: 'gray', textAlign: 'center', gridColumn: '1/-1' }}>Brak folderów w chmurze. Dodaj je przez Cyberducka!</div>
+                  )}
                 </div>
-              ))}
-            </div>
-          )}
+              )}
 
-          {/* Sytuacja B: Widok wnętrza konkretnego folderu */}
-          {activeFolder && (
-            <div className="photos-grid">
-              {activeFolder.zdjecia.map((fotoUrl, index) => (
-                <div key={index} className="photo-card" onClick={() => setLightboxIndex(index)}>
-                  <img src={fotoUrl} alt={`Fotka ${index}`} loading="lazy" />
+              {/* Sytuacja B: Widok wnętrza konkretnego folderu */}
+              {activeFolder && (
+                <div className="photos-grid">
+                  {activeFolder.zdjecia.map((fotoUrl, index) => (
+                    <div key={index} className="photo-card" onClick={() => setLightboxIndex(index)}>
+                      <img src={fotoUrl} alt={`Fotka ${index}`} loading="lazy" />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
         </div>
 
