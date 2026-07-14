@@ -69,6 +69,7 @@ function App() {
           <a href="https://www.facebook.com/marcin.maziarz.545" target="_blank" rel="noreferrer"><FaFacebook /></a>
         </div>
       </div>
+      <p>DUPA</p>
     </div>
   );
 }
