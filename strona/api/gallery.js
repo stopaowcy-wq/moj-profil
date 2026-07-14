@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     const keyId = process.env.B2_KEY_ID;
     const applicationKey = process.env.B2_APPLICATION_KEY;
 
-    // 1. Autoryzacja w Backblaze B2 (pobranie tokenu)
+    // 1. Autoryzacja w Backblaze B2 (pobranie tokenu i dozwolonego bucketId)
     const credentials = btoa(`${keyId}:${applicationKey}`);
     const authResponse = await fetch("https://api.backblazeb2.com/b2api/v2/b2_authorize_account", {
       headers: {
@@ -12,40 +12,39 @@ export default async function handler(req, res) {
     });
 
     if (!authResponse.ok) {
-      throw new Error("Błąd autoryzacji w Backblaze");
+      const errorText = await authResponse.text();
+      throw new Error(`Błąd autoryzacji w Backblaze: ${errorText}`);
     }
 
     const authData = await authResponse.json();
     const { apiUrl, authorizationToken } = authData;
+    
+    // Pobieramy bucketId bezpośrednio z uprawnień klucza
+    const bucketId = authData.allowed?.bucketId;
 
-    // Pobieramy listę kubełków, aby znaleźć ten właściwy
-    const bucketsResponse = await fetch(`${apiUrl}/b2api/v2/b2_list_buckets`, {
-      method: "POST",
-      headers: { Authorization: authorizationToken },
-      body: JSON.stringify({ accountId: authData.accountId }),
-    });
-
-    const bucketsData = await bucketsResponse.json();
-    const bucket = bucketsData.buckets.find(b => b.bucketName === "galeria-marcina");
-
-    if (!bucket) {
-      throw new Error("Nie znaleziono kubełka galeria-marcina");
+    if (!bucketId) {
+      throw new Error("Klucz nie ma przypisanego kubełka (brak bucketId w uprawnieniach klucza).");
     }
 
-    // 2. Pobranie listy plików z kubełka
+    // 2. Pobranie listy plików z kubełka za pomocą pobranego bucketId
     const filesResponse = await fetch(`${apiUrl}/b2api/v2/b2_list_file_names`, {
       method: "POST",
       headers: { Authorization: authorizationToken },
       body: JSON.stringify({
-        bucketId: bucket.bucketId,
+        bucketId: bucketId,
         maxFileCount: 10000,
       }),
     });
 
+    if (!filesResponse.ok) {
+      const errorText = await filesResponse.text();
+      throw new Error(`Błąd pobierania plików: ${errorText}`);
+    }
+
     const filesData = await filesResponse.json();
 
     // 3. Konwersja na format XML, żeby dopasować do Twojego kodu w React
-    const xmlFiles = filesData.files
+    const xmlFiles = (filesData.files || [])
       .map(file => `
         <Contents>
           <Key>${file.fileName}</Key>
