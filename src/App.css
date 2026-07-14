@@ -10,10 +10,13 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;   /* Szerokość okna przeglądarki */
-  height: 100vh;  /* Wysokość okna przeglądarki */
-  object-fit: cover; /* To najważniejszy punkt: wypełnia ekran, ucinając nadmiar */
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
   z-index: -1;
+  
+  /* TO JEST KLUCZOWE: */
+  pointer-events: none; 
 }
 
 h1 {
