@@ -27,7 +27,7 @@ function App() {
       <div className="main-wrapper gallery-view">
         <button className="back-btn" onClick={() => setShowGallery(false)}>Powrót</button>
         <h2>Galeria dla ziomków</h2>
-        <p>Tu w przyszłości dodasz swoje zdjęcia!</p>
+        <p></p>
       </div>
     );
   }
