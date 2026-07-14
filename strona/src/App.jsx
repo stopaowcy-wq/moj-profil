@@ -149,7 +149,8 @@ function App() {
           <h2>{activeFolder ? activeFolder.nazwa : "Galeria dla ziomków"}</h2>
         </div>
 
-        <div className="gallery-content">
+        {/* Dodano styl paddingTop, aby elementy nie chowały się pod górnym nagłówkiem */}
+        <div className="gallery-content" style={{ paddingTop: '100px' }}>
           {loading ? (
             <div style={{ color: 'white', textAlign: 'center', marginTop: '50px' }}>Ładowanie zdjęć z chmury...</div>
           ) : (
