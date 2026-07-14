@@ -34,7 +34,15 @@ function App() {
 
   return (
     <div className="main-wrapper">
-      <video autoPlay loop muted playsInline className="video-bg">
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline 
+        controls={false} 
+        disablePictureInPicture
+        className="video-bg"
+      >
         <source src={videoBg} type="video/mp4" />
       </video>
 
