@@ -232,7 +232,7 @@ function App() {
           <div className="gallery-login">
             <p style={{fontSize: '14px', marginBottom: '5px'}}>Jak inaczej mówimy na Pana Maziarza?</p>
             <input 
-              type="text" 
+              type="password" 
               placeholder="Odpowiedź..." 
               value={answer}
               onChange={(e) => setAnswer(e.target.value)} 
