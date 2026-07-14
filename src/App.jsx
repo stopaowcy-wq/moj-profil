@@ -33,18 +33,18 @@ function App() {
   }
 
   return (
-    // <div className="main-wrapper">
-    //   <video 
-    //     autoPlay 
-    //     loop 
-    //     muted 
-    //     playsInline 
-    //     controls={false} 
-    //     disablePictureInPicture
-    //     className="video-bg"
-    //   >
-    //     <source src={videoBg} type="video/mp4" />
-    //   </video>
+    <div className="main-wrapper">
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline 
+        controls={false} 
+        disablePictureInPicture
+        className="video-bg"
+      >
+        <source src={videoBg} type="video/mp4" />
+      </video>
 
       <div className="profile-card">
         <img src={mojAvatar} alt="Avatar" className="avatar" />
