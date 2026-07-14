@@ -134,11 +134,27 @@ function App() {
   // ==========================================
   // 3. WIDOK GALERII (PO ZALOGOWANIU)
   // ==========================================
+// ==========================================
+  // 3. WIDOK GALERII (PO ZALOGOWANIU)
+  // ==========================================
   if (showGallery) {
     return (
-      <div className="main-wrapper gallery-view">
+      <div className="main-wrapper gallery-view" style={{ 
+        height: 'auto', 
+        minHeight: '100vh', 
+        display: 'block', 
+        overflowY: 'auto' 
+      }}>
         {/* Pasek nawigacji u góry */}
-        <div className="gallery-header">
+        <div className="gallery-header" style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+          background: 'rgba(0, 0, 0, 0.85)',
+          backdropFilter: 'blur(10px)',
+          width: '100%',
+          boxSizing: 'border-box'
+        }}>
           {activeFolder ? (
             <button className="back-btn" onClick={() => { setActiveFolder(null); setLightboxIndex(null); }}>
               <FaArrowLeft /> Powrót do folderów
@@ -149,8 +165,8 @@ function App() {
           <h2>{activeFolder ? activeFolder.nazwa : "Galeria dla ziomków"}</h2>
         </div>
 
-        {/* Dodano styl paddingTop, aby elementy nie chowały się pod górnym nagłówkiem */}
-        <div className="gallery-content" style={{ paddingTop: '100px' }}>
+        {/* Treść galerii z delikatnym odstępem od przyklejonego nagłówka */}
+        <div className="gallery-content" style={{ paddingTop: '20px', paddingBottom: '40px' }}>
           {loading ? (
             <div style={{ color: 'white', textAlign: 'center', marginTop: '50px' }}>Ładowanie zdjęć z chmury...</div>
           ) : (
@@ -213,7 +229,6 @@ function App() {
       </div>
     );
   }
-
   // Oryginalny ekran powitalny
   return (
     <>
