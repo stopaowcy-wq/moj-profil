@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/gallery",
+      "destination": "https://s3.us-east-005.backblazeb2.com/galeria-marcina?list-type=2"
+    }
+  ]
+}
