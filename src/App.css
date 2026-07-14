@@ -18,6 +18,11 @@
   pointer-events: none; 
 }
 
+/* Ukrycie kontrolek przeglądarki */
+video::-webkit-media-controls {
+  display: none !important;
+}
+
 h1 {
   font-family: 'Pirata One', cursive;
   font-size: 4rem;
