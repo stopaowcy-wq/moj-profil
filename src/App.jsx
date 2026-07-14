@@ -35,20 +35,27 @@ function App() {
 
   return (
     <div className="main-wrapper">
-      <video autoPlay loop muted={muted} playsInline className="video-bg">
-        <source src={videoBg} type="video/mp4" />
-      </video>
+<video 
+  autoPlay 
+  loop 
+  muted={muted} 
+  playsInline 
+  controls={false} // Wymusza brak kontrolek
+  className="video-bg"
+>
+  <source src={videoBg} type="video/mp4" />
+</video>
 
-      {/* <button className="sound-toggle" onClick={() => setMuted(!muted)}>
+      <button className="sound-toggle" onClick={() => setMuted(!muted)}>
         {muted ? <FaVolumeMute /> : <FaVolumeUp />}
-      </button> */}
+      </button>
 
       <div className="profile-card">
         <img src={mojAvatar} alt="Avatar" className="avatar" />
         <h1>Marcin</h1>
         
         <div className="gallery-login">
-          <p style={{fontSize: '14px', marginBottom: '5px'}}>Jak inaczej mówimy na Pana Maziarza? Kurwa fjut</p>
+          <p style={{fontSize: '14px', marginBottom: '5px'}}>Jak inaczej mówimy na Pana Maziarza?</p>
           <input 
             type="text" 
             placeholder="Odpowiedź..." 
