@@ -131,40 +131,14 @@ function App() {
     }
   };
 
-  // ==========================================
+// ==========================================
   // 3. WIDOK GALERII (PO ZALOGOWANIU)
   // ==========================================
   if (showGallery) {
     return (
-      <div className="gallery-view-wrapper" style={{ 
-        width: '100%',
-        minHeight: '100vh',
-        backgroundColor: '#0a0a0a', 
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'flex-start', // Zawsze zaczynamy od samej góry ekranu!
-        position: 'relative',
-        boxSizing: 'border-box'
-      }}>
-        {/* Przyklejony nagłówek na samej górze */}
-        <div className="gallery-header" style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          background: 'rgba(10, 10, 10, 0.95)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-          width: '100%',
-          height: '70px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '0 20px',
-          boxSizing: 'border-box'
-        }}>
+      <div className="gallery-view">
+        {/* Pasek nawigacji u góry */}
+        <div className="gallery-header">
           {activeFolder ? (
             <button className="back-btn" onClick={() => { setActiveFolder(null); setLightboxIndex(null); }}>
               <FaArrowLeft /> Powrót do folderów
@@ -172,20 +146,13 @@ function App() {
           ) : (
             <button className="back-btn" onClick={() => setShowGallery(false)}>Wyjdź z Galerii</button>
           )}
-          <h2 style={{ margin: 0, color: 'white', fontSize: '20px' }}>
+          <h2>
             {activeFolder ? activeFolder.nazwa : "Galeria dla ziomków"}
           </h2>
         </div>
 
-        {/* Treść galerii z bezpiecznym odstępem (90px) i wyśrodkowaniem na komputerze */}
-        <div className="gallery-content" style={{ 
-          paddingTop: '90px', 
-          paddingBottom: '40px',
-          width: '90%',
-          maxWidth: '1200px', 
-          margin: '0 auto',   
-          boxSizing: 'border-box'
-        }}>
+        {/* Treść galerii */}
+        <div className="gallery-content">
           {loading ? (
             <div style={{ color: 'white', textAlign: 'center', marginTop: '50px' }}>Ładowanie zdjęć z chmury...</div>
           ) : (
