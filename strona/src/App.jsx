@@ -35,7 +35,7 @@ function App() {
     async function fetchCloudGallery() {
       try {
         // Wysyłamy zapytanie do publicznego API S3 w Backblaze o listę plików
-       const response = await fetch('/api/gallery');
+        const response = await fetch('/api/gallery');
         const text = await response.text();
         console.log("Surowe dane z chmury:", text);
         
@@ -105,15 +105,32 @@ function App() {
     }
   };
 
-  // Funkcja pobierania plików
-  const downloadImage = (url) => {
-    const link = document.createElement('a');
-    link.href = url;
-    // Wyciąga oryginalną nazwę pliku z adresu URL i dekoduje ją (usuwa znaki typu %20)
-    link.download = decodeURIComponent(url.split('/').pop());
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  // Funkcja bezpiecznego pobierania plików obsługująca blokady CORS
+  const downloadImage = async (e, url) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Problem z pobieraniem pliku");
+      
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      // Wyciąga oryginalną nazwę pliku z adresu URL i dekoduje ją (usuwa znaki typu %20)
+      link.download = decodeURIComponent(url.split('/').pop());
+      document.body.appendChild(link);
+      link.click();
+      
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Błąd pobierania bezpośredniego, otwieranie w nowym oknie:", error);
+      // Awaryjny fallback, gdyby wystąpiły błędy sieciowe
+      window.open(url, '_blank');
+    }
   };
 
   // Obsługa przełączania zdjęć w Lightboxie
@@ -131,7 +148,7 @@ function App() {
     }
   };
 
-// ==========================================
+  // ==========================================
   // 3. WIDOK GALERII (PO ZALOGOWANIU)
   // ==========================================
   if (showGallery) {
@@ -203,7 +220,7 @@ function App() {
               
               <div className="lightbox-toolbar">
                 <span>Zdjęcie {lightboxIndex + 1} z {activeFolder.zdjecia.length}</span>
-                <button className="download-btn" onClick={() => downloadImage(activeFolder.zdjecia[lightboxIndex])}>
+                <button className="download-btn" onClick={(e) => downloadImage(e, activeFolder.zdjecia[lightboxIndex])}>
                   <FaDownload /> Pobierz oryginalne
                 </button>
               </div>
