@@ -223,7 +223,7 @@ function App() {
           <h1>Marcin</h1>
           
           <div className="gallery-login">
-            <p style={{fontSize: '14px', marginBottom: '5px'}}>Aby przejść do Zdjęć, napisz <br /> Jak inaczej mówimy na Pana Maziarza?</p>
+            <p style={{fontSize: '14px', marginBottom: '5px'}}>Aby przejść do Zdjęć, napisz: <br /> Jak inaczej mówimy na Pana Maziarza?</p>
             <input 
               type="password" 
               placeholder={loading ? "Weryfikacja..." : "Odpowiedź..."}
