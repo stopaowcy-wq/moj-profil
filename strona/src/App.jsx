@@ -130,30 +130,38 @@ function App() {
       setLightboxIndex((prev) => (prev - 1 + activeFolder.zdjecia.length) % activeFolder.zdjecia.length);
     }
   };
-
-  // ==========================================
-  // 3. WIDOK GALERII (PO ZALOGOWANIU)
-  // ==========================================
 // ==========================================
   // 3. WIDOK GALERII (PO ZALOGOWANIU)
   // ==========================================
   if (showGallery) {
     return (
       <div className="main-wrapper gallery-view" style={{ 
-        height: 'auto', 
+        display: 'flex', 
+        flexDirection: 'column',
+        justifyContent: 'flex-start', // Wyłącza centrowanie w pionie
+        alignItems: 'center',        // Środkuje galerię w poziomie
         minHeight: '100vh', 
-        display: 'block', 
-        overflowY: 'auto' 
+        height: 'auto',
+        overflowY: 'auto',
+        width: '100vw',
+        position: 'relative'
       }}>
-        {/* Pasek nawigacji u góry */}
+        {/* Pasek nawigacji u góry - teraz ma absolutną pozycję, więc go nie zgubimy */}
         <div className="gallery-header" style={{
-          position: 'sticky',
+          position: 'absolute',
           top: 0,
+          left: 0,
+          right: 0,
           zIndex: 100,
           background: 'rgba(0, 0, 0, 0.85)',
           backdropFilter: 'blur(10px)',
           width: '100%',
-          boxSizing: 'border-box'
+          boxSizing: 'border-box',
+          height: '80px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '0 20px'
         }}>
           {activeFolder ? (
             <button className="back-btn" onClick={() => { setActiveFolder(null); setLightboxIndex(null); }}>
@@ -162,11 +170,17 @@ function App() {
           ) : (
             <button className="back-btn" onClick={() => setShowGallery(false)}>Wyjdź z Galerii</button>
           )}
-          <h2>{activeFolder ? activeFolder.nazwa : "Galeria dla ziomków"}</h2>
+          <h2 style={{ margin: 0 }}>{activeFolder ? activeFolder.nazwa : "Galeria dla ziomków"}</h2>
         </div>
 
-        {/* Treść galerii z delikatnym odstępem od przyklejonego nagłówka */}
-        <div className="gallery-content" style={{ paddingTop: '20px', paddingBottom: '40px' }}>
+        {/* Treść galerii z bezpiecznym odstępem 100px od góry, żeby nagłówek jej nie zasłaniał */}
+        <div className="gallery-content" style={{ 
+          paddingTop: '110px', 
+          paddingBottom: '40px',
+          width: '100%',
+          maxWidth: '1200px', // Ogranicza szerokość na dużych monitorach, żeby zdjęcia ładnie wyglądały
+          boxSizing: 'border-box'
+        }}>
           {loading ? (
             <div style={{ color: 'white', textAlign: 'center', marginTop: '50px' }}>Ładowanie zdjęć z chmury...</div>
           ) : (
