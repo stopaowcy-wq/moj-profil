@@ -130,38 +130,40 @@ function App() {
       setLightboxIndex((prev) => (prev - 1 + activeFolder.zdjecia.length) % activeFolder.zdjecia.length);
     }
   };
-// ==========================================
+
+  // ==========================================
   // 3. WIDOK GALERII (PO ZALOGOWANIU)
   // ==========================================
   if (showGallery) {
     return (
-      <div className="main-wrapper gallery-view" style={{ 
-        display: 'flex', 
+      <div className="gallery-view-wrapper" style={{ 
+        width: '100%',
+        minHeight: '100vh',
+        backgroundColor: '#0a0a0a', 
+        display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-start', // Wyłącza centrowanie w pionie
-        alignItems: 'center',        // Środkuje galerię w poziomie
-        minHeight: '100vh', 
-        height: 'auto',
-        overflowY: 'auto',
-        width: '100vw',
-        position: 'relative'
+        alignItems: 'center',
+        justifyContent: 'flex-start', // Zawsze zaczynamy od samej góry ekranu!
+        position: 'relative',
+        boxSizing: 'border-box'
       }}>
-        {/* Pasek nawigacji u góry - teraz ma absolutną pozycję, więc go nie zgubimy */}
+        {/* Przyklejony nagłówek na samej górze */}
         <div className="gallery-header" style={{
-          position: 'absolute',
+          position: 'fixed',
           top: 0,
           left: 0,
           right: 0,
-          zIndex: 100,
-          background: 'rgba(0, 0, 0, 0.85)',
+          zIndex: 1000,
+          background: 'rgba(10, 10, 10, 0.95)',
           backdropFilter: 'blur(10px)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
           width: '100%',
-          boxSizing: 'border-box',
-          height: '80px',
+          height: '70px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '0 20px'
+          padding: '0 20px',
+          boxSizing: 'border-box'
         }}>
           {activeFolder ? (
             <button className="back-btn" onClick={() => { setActiveFolder(null); setLightboxIndex(null); }}>
@@ -170,15 +172,18 @@ function App() {
           ) : (
             <button className="back-btn" onClick={() => setShowGallery(false)}>Wyjdź z Galerii</button>
           )}
-          <h2 style={{ margin: 0 }}>{activeFolder ? activeFolder.nazwa : "Galeria dla ziomków"}</h2>
+          <h2 style={{ margin: 0, color: 'white', fontSize: '20px' }}>
+            {activeFolder ? activeFolder.nazwa : "Galeria dla ziomków"}
+          </h2>
         </div>
 
-        {/* Treść galerii z bezpiecznym odstępem 100px od góry, żeby nagłówek jej nie zasłaniał */}
+        {/* Treść galerii z bezpiecznym odstępem (90px) i wyśrodkowaniem na komputerze */}
         <div className="gallery-content" style={{ 
-          paddingTop: '110px', 
+          paddingTop: '90px', 
           paddingBottom: '40px',
-          width: '100%',
-          maxWidth: '1200px', // Ogranicza szerokość na dużych monitorach, żeby zdjęcia ładnie wyglądały
+          width: '90%',
+          maxWidth: '1200px', 
+          margin: '0 auto',   
           boxSizing: 'border-box'
         }}>
           {loading ? (
@@ -198,7 +203,7 @@ function App() {
                     </div>
                   ))}
                   {galleryData.length === 0 && (
-                    <div style={{ color: 'gray', textAlign: 'center', gridColumn: '1/-1' }}>Brak folderów w chmurze. Dodaj je przez Cyberducka!</div>
+                    <div style={{ color: 'gray', textAlign: 'center', gridColumn: '1/-1' }}>Brak folderów w chmurze.</div>
                   )}
                 </div>
               )}
@@ -243,6 +248,7 @@ function App() {
       </div>
     );
   }
+
   // Oryginalny ekran powitalny
   return (
     <>
