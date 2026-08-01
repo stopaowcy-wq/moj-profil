@@ -243,6 +243,8 @@ function App() {
             <a href="https://steamcommunity.com/profiles/76561198880818625/" target="_blank" rel="noreferrer"><FaSteam /></a>
             <a href="https://www.instagram.com/marcin_maziarz433/" target="_blank" rel="noreferrer"><FaInstagram /></a>
             <a href="https://www.facebook.com/marcin.maziarz.545" target="_blank" rel="noreferrer"><FaFacebook /></a>
+            <br /><br />
+            <a href="https://tipply.pl/@stopaowcy" target="_blank" rel="noreferrer">Wesprzyj Mnie</a>
           </div>
         </div>
       </div>
