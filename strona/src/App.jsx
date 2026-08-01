@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { FaSpotify, FaYoutube, FaSteam, FaInstagram, FaFacebook, FaVolumeUp, FaVolumeMute, FaDownload, FaArrowLeft, FaArrowRight, FaTimes } from 'react-icons/fa';
+import { FaSpotify, FaYoutube, FaSteam, FaInstagram, FaFacebook, FaVolumeUp, FaVolumeMute, FaDownload, FaArrowLeft, FaArrowRight, FaTimes, FaHeart } from 'react-icons/fa';
 import CryptoJS from 'crypto-js'; 
 import mojAvatar from './assets/baf4e793-29af-44d1-9e44-1d8c27f6295b.jpg';
 import videoBg from './assets/background.mp4';
@@ -243,9 +243,11 @@ function App() {
             <a href="https://steamcommunity.com/profiles/76561198880818625/" target="_blank" rel="noreferrer"><FaSteam /></a>
             <a href="https://www.instagram.com/marcin_maziarz433/" target="_blank" rel="noreferrer"><FaInstagram /></a>
             <a href="https://www.facebook.com/marcin.maziarz.545" target="_blank" rel="noreferrer"><FaFacebook /></a>
-            <br /><br />
-            <a href="https://tipply.pl/@stopaowcy" target="_blank" rel="noreferrer">Wesprzyj Mnie</a>
           </div>
+
+          <a href="https://tipply.pl/@stopaowcy" target="_blank" rel="noreferrer" className="support-btn">
+            <FaHeart className="pulse-icon" /> Wesprzyj Mnie
+          </a>
         </div>
       </div>
     </>

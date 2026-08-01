@@ -80,10 +80,10 @@ h1 {
 .sound-toggle {
   position: fixed !important; 
   top: 20px !important;          
-  right: 20px !important;         
-  z-index: 9999 !important;       
+  right: 20px !important;        
+  z-index: 9999 !important;      
   
-  display: flex !important;       
+  display: flex !important;      
   align-items: center !important;
   justify-content: center !important;
   
@@ -491,4 +491,44 @@ h1 {
     grid-template-columns: 1fr; 
     gap: 20px;
   }
+}
+
+/* =======================================================
+   PRZYCISK "WESPRZYJ MNIE"
+   ======================================================= */
+.support-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px; /* Odstęp od ikon społecznościowych */
+  padding: 12px 28px;
+  
+  /* Ładny gradient pasujący do napiwków/wsparcia */
+  background: linear-gradient(135deg, #ff512f, #dd2476); 
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(221, 36, 118, 0.4);
+  
+  transition: all 0.3s ease;
+}
+
+.support-btn:hover {
+  transform: translateY(-4px) scale(1.05); /* Przycisk unosi się i lekko powiększa */
+  box-shadow: 0 8px 25px rgba(221, 36, 118, 0.6); /* Mocniejszy cień */
+  color: white;
+}
+
+/* Animacja pulsującego serduszka */
+.pulse-icon {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); color: #ffeb3b; } /* Przy powiększeniu robi się lekko żółte/złote */
+  100% { transform: scale(1); }
 }
