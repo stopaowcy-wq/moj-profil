@@ -245,7 +245,7 @@ function App() {
             <a href="https://www.facebook.com/marcin.maziarz.545" target="_blank" rel="noreferrer"><FaFacebook /></a>
           </div>
 
-          <a href="https://tipply.pl/@stopaowcy" target="_blank" rel="noreferrer" className="support-btn">
+          <a href="https://tipply.pl/@lubiemorta" target="_blank" rel="noreferrer" className="support-btn">
             <FaHeart className="pulse-icon" /> Wesprzyj Mnie
           </a>
         </div>
